@@ -1,23 +1,30 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
+
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    // Create the main window
+    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Flappy Bird!");
 
-    while (window.isOpen())
-    {
+    // Start the game loop
+    while (window.isOpen()) {
+        // Process events
         sf::Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
 
+        // Clear screen
         window.clear();
-        window.draw(shape);
+
+        // Update and render the game objects here
+
+        // Update the window
         window.display();
     }
 
