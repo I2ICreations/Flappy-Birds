@@ -1,7 +1,10 @@
 #include "Pipe.h"
 #include <iostream>
 
-Pipe::Pipe(float StartX) {		//This line defines the constructor for the pipe class. The startx para specifies the inital position of the pipe
+//Initalize the static member
+std::vector<Pipe> Pipe::pipes;
+
+Pipe::Pipe(float startX) {		//This line defines the constructor for the pipe class. The startx para specifies the inital position of the pipe
 	if (!texture.loadFromFile("assets/pipe.png")) {
 		std::cerr << "Error loading pipe.png" << std::endl;
 	}
@@ -10,7 +13,8 @@ Pipe::Pipe(float StartX) {		//This line defines the constructor for the pipe cla
 	}
 
 	sprite.setTexture(texture);		//This sets the texture of the sprite to the loaded texture
-	sprite.setPosition(StartX, rand() % 400);		//This line sets the initial position of the sprite to coordinates (startX, rand() % 400) on the screen. The x-coordinate is startX, and the y-coordinate is a random value between 0 and 399. This randomizes the vertical position of the pipe.
+	sprite.setPosition(startX, std::rand()%(1080-200));	//This line sets the initial position of the sprite to coordinates (startX, rand() % 400) on the screen. The x-coordinate is startX, and the y-coordinate is a random value between 0 and 399. This randomizes the vertical position of the pipe.
+	sprite.setScale(1, 2.3);	//Adjusting the scaling for the pipes
 }
 
 void Pipe::update() {
@@ -23,4 +27,25 @@ void Pipe::draw(sf::RenderWindow& window) const {
 
 sf::FloatRect Pipe::getBounds() const {		//Get Bounds Method Definition: This line defines the getBounds method, which returns the bounding rectangle of the pipe. The const keyword indicates that this method does not modify the state of the object.
 	return sprite.getGlobalBounds();
+}
+
+//Static Methods to manage the pipes
+void Pipe::addPipe(float startX) {
+	pipes.emplace_back(startX);
+}
+
+void Pipe::updatePipes() {
+	for (auto& pipe : pipes) {
+		pipe.update();
+	}
+}
+
+void Pipe::drawPipes(sf::RenderWindow& window) {
+	for (const auto& pipe : pipes) {
+		pipe.draw(window);
+	}
+}
+
+const std::vector<Pipe>& Pipe::getPipes() {
+	return pipes;
 }
