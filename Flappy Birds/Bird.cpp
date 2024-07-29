@@ -1,9 +1,14 @@
 #include "Bird.h"	//includes the bird's header file
+#include <iostream>
 
 Bird::Bird() {
-	if (!texture.loadFromFile("assests/bird.png")) {
-		//Handle loading error
+	if (!texture.loadFromFile("assets/bird.png")) {
+		std::cerr << "Error loading bird.png" << std::endl;
 	}
+	else {
+		std::cout << "Successfully loaded bird.png" << std::endl;
+	}
+
 	sprite.setTexture(texture);		//This sets the sprite to a loaded texture 'texture'
 	sprite.setPosition(100,300);	//Setting the intial position of the sprite
 	velocity = 0;	//Initalizing the bird's veloicty
@@ -26,4 +31,8 @@ void Bird::draw(sf::RenderWindow& window) { //Draw the bird on the window
 
 void Bird::flap() {
 	velocity = flapStrength;	//This sets the bird's vertical velocity to 'flapStrength', which is a negative value
+}
+
+sf::FloatRect Bird::getBounds() const {
+	return sprite.getGlobalBounds();
 }

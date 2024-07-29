@@ -11,6 +11,7 @@ public:		//These are functions that are publicy accessible
 	void update();	//A function to update the bird's state
 	void draw(sf::RenderWindow& window);	//A function to draw the bird on the window
 	void flap();	//A function to make the bird flap - this then affects its velocity
+	sf::FloatRect getBounds() const;
 
 private:	//these are objects and functions that are not publicly accessible
 	sf::Sprite sprite;	//An object to represent the bird
